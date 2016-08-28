@@ -146,11 +146,11 @@ To run `PeiBackdoor.efi` on your physical machine you need to obtain image of ex
 
 ... and itfect it using `PeiBackdoor.py`:
 
-1. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending on it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.bin -p PeiBackdoor_IA32.efi`
+1. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending on it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.efi -p PeiBackdoor_X64.efi`
 
-2. Use UEFITool to replace original PE image with `image_patched.bin`, save modified flash image into the file and write it to the motherboard ROM with programmer.
+2. Use UEFITool to replace original PE image with `image_patched.efi`, save modified flash image into the file and write it to the motherboard ROM with programmer.
 
-Unfortunately, on some machines (for example my Intel NUC) patched flash image is not working after it's modification with UEFITool, so, I implemented `-f` option for `PeiBackdoor.py` that allows to infect raw firmware image without it's rebuild. Here's example of it's usage to infect [SYSKLi35.86A](https://downloadcenter.intel.com/download/26195/BIOS-Update-SYSKLi35-86A-?product=89190) firmware of Skylake based Intel NUC:
+Unfortunately, on some machines (for example my Intel NUC) patched flash image is not working after it's modification with UEFITool, so, I implemented `-f` option for `PeiBackdoor.py` that allows to infect raw firmware image without PEI firmware volue rebuild needed. Here's example of it's usage to infect [SYSKLi35.86A](https://downloadcenter.intel.com/download/26195/BIOS-Update-SYSKLi35-86A-?product=89190) firmware of Skylake based Intel NUC:
 
 ```
 $ python PeiBackdoor.py -f flash.bin -p PeiBackdoor_IA32.efi -o flash_patched.bin
