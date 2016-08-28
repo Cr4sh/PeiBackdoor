@@ -96,7 +96,7 @@ Relocating payload to 0xfffde040
 Flash was successfully infected
 ```
 
-## Running on QUEMU <a id="_4"></a>
+## Running on QEMU <a id="_4"></a>
 
 To run PEI backdoor on QEMU virtual machine with OVMF firmware you have to perform the following steps:
 
