@@ -1,0 +1,46 @@
+[defines]
+  INF_VERSION = 0x00010005 
+  BASE_NAME = PeiBackdoor
+  FILE_GUID = 22D5AE41-147E-4C44-AE72-ECD9BBB455C2
+  MODULE_TYPE = PEIM
+  ENTRY_POINT = BackdoorEntry
+
+[Sources]
+  src/debug.c
+  src/loader.c
+  src/printf.c
+  src/PeiBackdoor.c
+  src/serial.c
+  src/udis86/decode.c
+  src/udis86/input.c
+  src/udis86/itab.c
+  src/udis86/mnem.c
+  src/udis86/syn.c
+  src/udis86/syn-intel.c
+  src/udis86/udis86.c
+  payload.c
+
+[Sources.X64]
+  src/asm/amd64/common_asm.asm
+
+[Sources.IA32]
+  src/asm/i386/common_asm.asm
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec  
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec  
+  StdLib/StdLib.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  DebugLib
+
+[Ppis]
+  gEfiPeiCpuIoPpiInstalledGuid
+  gEfiPciCfgPpiInServiceTableGuid
+  gEfiPeiMemoryDiscoveredPpiGuid
+  
+[Depex]
+  TRUE
