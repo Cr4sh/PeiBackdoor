@@ -184,42 +184,45 @@ To run PEI backdoor on [QEMU](http://qemu.org/) virtual machine with [OVMF firmw
 
 5. Run QEMU virtual machine: `qemu-system-x86_64 -bios Build/OvmfX64/DEBUG_VS2008x86/FV/OVMF.fd -debugcon file:ovmf_debug.log -global isa-debugcon.iobase=0x402 -hda disk.qcow2 -net nic -m 1024 -gdb tcp:127.0.0.1:1234`
 
-6. Monitor PEI backdoor debug messages in the new terminal window: `tail -f ovmf_debug.log | grep PeiBackdoor`
+6. Monitor PEI backdoor debug messages in the new terminal window: `tail -f ovmf_debug.log | grep ') :'`
 
 Example of PEI backdoor debug output:
 
 ```
-PeiBackdoor.c(262) : ******************************
-PeiBackdoor.c(263) :   PEI backdoor loaded
-PeiBackdoor.c(264) : ******************************
-PeiBackdoor.c(267) : Payload image address is 0x8395e0
-PeiBackdoor.c(271) : EFI_PEI_SERVICES is at 0x8177f8
-PeiBackdoor.c(109) : Host bridge VID:DID is 8086:1237
-PeiBackdoor.c(120) : MemoryDiscoveredCallback() called!
-PeiBackdoor.c(68) : HOB: type = 0x1
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x7
-PeiBackdoor.c(68) : HOB: type = 0x4
-PeiBackdoor.c(68) : HOB: type = 0x4
-PeiBackdoor.c(68) : HOB: type = 0x4
-PeiBackdoor.c(68) : HOB: type = 0x3
-PeiBackdoor.c(74) :  EFI_RESOURCE_SYSTEM_MEMORY: addr = 0x100000, size = 0x1ff00000
-PeiBackdoor.c(68) : HOB: type = 0x3
-PeiBackdoor.c(74) :  EFI_RESOURCE_SYSTEM_MEMORY: addr = 0x0, size = 0xa0000
-PeiBackdoor.c(68) : HOB: type = 0x2
-PeiBackdoor.c(68) : HOB: type = 0x2
-PeiBackdoor.c(68) : HOB: type = 0x2
-PeiBackdoor.c(68) : HOB: type = 0x2
+PeiBackdoor.c(166) : ******************************
+PeiBackdoor.c(167) :   PEI backdoor loaded
+PeiBackdoor.c(168) : ******************************
+PeiBackdoor.c(171) : Payload image address is 0x8395e0
+PeiBackdoor.c(175) : EFI_PEI_SERVICES is at 0x8177f8
+payload.c(118) : Host bridge VID:DID is 8086:1237
+payload.c(85) : MemoryDiscoveredCallback() called!
+payload.c(44) : HOB: type = 0x1
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x7
+payload.c(44) : HOB: type = 0x4
+payload.c(44) : HOB: type = 0x4
+payload.c(44) : HOB: type = 0x4
+payload.c(44) : HOB: type = 0x3
+payload.c(50) :  EFI_RESOURCE_SYSTEM_MEMORY: addr = 0x100000, size = 0x1ff00000
+payload.c(44) : HOB: type = 0x3
+payload.c(50) :  EFI_RESOURCE_SYSTEM_MEMORY: addr = 0x0, size = 0xa0000
+payload.c(44) : HOB: type = 0x2
+payload.c(44) : HOB: type = 0x2
+payload.c(44) : HOB: type = 0x2
+payload.c(44) : HOB: type = 0x2
+payload.c(44) : HOB: type = 0x2
+...
+
 ```
 
-Written by:
+******************************************
 
-Dmytro Oleksiuk (aka Cr4sh)
+Written by Dmytro Oleksiuk (aka Cr4sh)
 
-cr4sh0@gmail.com :: http://blog.cr4.sh
+cr4sh0@gmail.com | http://blog.cr4.sh
