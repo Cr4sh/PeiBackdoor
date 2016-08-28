@@ -136,7 +136,7 @@ Instead of `SiInitPreMem` PEI driver entry point patch you also can use `--patch
 
 ## Running on real hardware <a id="_3"></a>
 
-To run `PeiBackdoor.efi` on your physical machine:
+To run `PeiBackdoor.efi` on your physical machine you need to obtain image of existing PEI driver:
 
 1. Dump motherboard firmware using hardware SPI programmer.
 
@@ -144,9 +144,11 @@ To run `PeiBackdoor.efi` on your physical machine:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Cr4sh/blog/master/pei-replace.png" width="650" height="378" style="border: 0px;"></img>
 
-3. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending on it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.bin -p PeiBackdoor_IA32.efi`
+... and itfect it using `PeiBackdoor.py`:
 
-4. Use UEFITool to replace original PE image with `image_patched.bin`, save modified flash image into the file and write it to the motherboard ROM with programmer.
+1. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending on it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.bin -p PeiBackdoor_IA32.efi`
+
+2. Use UEFITool to replace original PE image with `image_patched.bin`, save modified flash image into the file and write it to the motherboard ROM with programmer.
 
 Unfortunately, on some machines (for example my Intel NUC) patched flash image is not working after it's modification with UEFITool, so, I implemented `-f` option for `PeiBackdoor.py` that allows to infect raw firmware image without it's rebuild. Here's example of it's usage to infect [SYSKLi35.86A](https://downloadcenter.intel.com/download/26195/BIOS-Update-SYSKLi35-86A-?product=89190) firmware of Skylake based Intel NUC:
 
