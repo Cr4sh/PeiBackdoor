@@ -28,6 +28,8 @@ PEI backdoor project includes:
 
 * [src/](https://github.com/Cr4sh/PeiBackdoor/blob/master/src) - Rest of the PEI backdoor code.
 
+`PeiBackdoor.py` is using [Capstone engine](http://www.capstone-engine.org/) and [pefile](https://github.com/erocarrera/pefile) Python libraries, you need to install them with `pip install capstone pefile` command.
+
 ## Building from the source code <a id="_1"></a>
 
 `payload.c` file with the user supplied PEI stage payload code has the following look:
