@@ -2,6 +2,8 @@
 
 This project implements early stage firmware backdoor for UEFI based firmware. It allows to execute arbitrary code written in C during Pre EFI Init (PEI) phase of Platform Initialization (PI). This backdoor might be useful for low level manipulations with the target platform configuration when the most of the platform configuration registers are not locked yet.
 
+<img height="378" src="https://raw.githubusercontent.com/Cr4sh/blog/master/uefi-smm-backdoor/uefi-boot-sequence.png" style="border: 0px;" width="679"></img>
+
 Possible applied use cases:
 
 * Edit values of `REMAPBASE`, `REMAPLIMIT` and other host controller registers during RAM initialization to perform UMA remap attack on Intel Management Engine RAM.
@@ -12,7 +14,7 @@ Possible applied use cases:
 
 PEI backdoor project includes:
 
-* [PeiBackdoor.py](https://github.com/Cr4sh/PeiBackdoor/blob/master/src/PeiBackdoor.py) - Python program that allows to infect raw flash images or individual UEFI PEI drivers with the backdoor code.
+* [PeiBackdoor.py](https://github.com/Cr4sh/PeiBackdoor/blob/master/PeiBackdoor.py) - Python program that allows to infect raw flash images or individual UEFI PEI drivers with the backdoor code.
 
 * [PeiBackdoor_IA32.efi](https://github.com/Cr4sh/PeiBackdoor/blob/master/PeiBackdoor_IA32.efi), [PeiBackdoor_IA32.pdb](https://github.com/Cr4sh/PeiBackdoor/blob/master/PeiBackdoor_IA32.pdb) - 32-bit PEI backdoor binary compiled with `ACTIVE_PLATFORM = IA32`.
 
@@ -34,13 +36,13 @@ Step by step instruction:
 
 1. Run Visual Studio 2008 Command Prompt and cd to EDK2 directory.
 
-2. Execute `git clone git://github.com/Cr4sh/PeiBackdoor.git` command.
+2. Execute `Edk2Setup.bat --pull` command to configure build environment and download required binaries.
 
-3. Edit [Conf/target.txt](https://github.com/tianocore/edk2/blob/master/Conf/target.txt) file and set `ACTIVE_PLATFORM` property value to the  `OvmfPkg/OvmfPkgX64.dsc` for 64-bit build or to the `OvmfPkg/OvmfPkgIa32.dsc` for 32-bit build. Also you need to set `TARGET_ARCH` property value to the `X64` for 64-bit build or to the `IA32` for 32-bit build.
+3. Execute `git clone git://github.com/Cr4sh/PeiBackdoor.git` command.
 
-4. Edit [OvmfPkg/OvmfPkgX64.dsc](https://github.com/tianocore/edk2/blob/master/OvmfPkg/OvmfPkgX64.dsc) and add `PeiBackdoor/PeiBackdoor.inf` path at the end of the `[components]` section.
+4. Edit `Conf/target.txt` file and set `ACTIVE_PLATFORM` property value to the  `OvmfPkg/OvmfPkgX64.dsc` for 64-bit build or to the `OvmfPkg/OvmfPkgIa32.dsc` for 32-bit build. Also you need to set `TARGET_ARCH` property value to the `X64` for 64-bit build or to the `IA32` for 32-bit build.
 
-5. Execute `Edk2Setup.bat --pull` command to configure build environment and download required binaries.
+5. Edit [OvmfPkg/OvmfPkgX64.dsc](https://github.com/tianocore/edk2/blob/master/OvmfPkg/OvmfPkgX64.dsc) and add `PeiBackdoor/PeiBackdoor.inf` path at the end of the `[components]` section.
 
 6. `cd PeiBackdoor && build`
 
