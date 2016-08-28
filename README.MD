@@ -66,7 +66,7 @@ If `-f` option was specified - program is trying to find `SiInitPreMem` PEI driv
 
 Instead of `SiInitPreMem` PEI driver entry point patch you also can use `--patch-offs <offset>` command line option to hook arbitrary function of some PEI driver that stored inside firmware image in uncompressed form (for example, AMI based firmware of my Intel NUC is not using any compression for all of it's PEI drivers).
 
-## Running real hardware <a id="_3"></a>
+## Running on real hardware <a id="_3"></a>
 
 To run `PeiBackdoor.efi` on your physical machine:
 
