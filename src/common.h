@@ -29,6 +29,11 @@
         (_guid_)->Data4[6], (_guid_)->Data4[7]                                  \
     );
 
+#define PCI_ADDR(_bus_, _dev_, _func_, _addr_)                              \
+                                                                            \
+    (unsigned int)(((_bus_) << 16) | ((_dev_) << 11) | ((_func_) << 8) |    \
+                   ((_addr_) & 0xfc) | ((unsigned int)0x80000000))
+
 #define FPTR32 "0x%x"
 #define FPTR64 "0x%llx"
 

