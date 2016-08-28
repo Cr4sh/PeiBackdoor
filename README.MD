@@ -98,9 +98,9 @@ Flash was successfully infected
 
 ## Running on QEMU <a id="_4"></a>
 
-To run PEI backdoor on QEMU virtual machine with OVMF firmware you have to perform the following steps:
+To run PEI backdoor on [QEMU](http://qemu.org/) virtual machine with [OVMF firmware](http://www.linux-kvm.org/page/OVMF) you have to perform the following steps:
 
-1. Edit `config.h` and uncomment `BACKDOOR_DEBUG_OVMF` to see PEI backdoor debug messages generated with `DbgMsg()` function of `src/debug.c` in OVMF debug output.
+1. Edit `config.h` and uncomment `BACKDOOR_DEBUG_OVMF` to see PEI backdoor debug messages generated with `DbgMsg()` function of [src/debug.c](https://github.com/Cr4sh/PeiBackdoor/blob/master/src/debug.c) in OVMF debug output.
 
 2. Execute `build` command from the root directory of EDK2 source code tree to build the whole OVMF firmware for `TARGET_ARCH = X64`, resulting firmware image file will be located at `Build/OvmfX64/DEBUG_VS2008x86/FV/OVMF.fd`
 
