@@ -110,7 +110,7 @@ To run PEI backdoor on [QEMU](http://qemu.org/) virtual machine with [OVMF firmw
 
 5. Run QEMU virtual machine: `qemu-system-x86_64 -bios Build/OvmfX64/DEBUG_VS2008x86/FV/OVMF.fd -debugcon file:ovmf_debug.log -global isa-debugcon.iobase=0x402 -hda disk.qcow2 -net nic -m 1024 -gdb tcp:127.0.0.1:1234`
 
-6. Monitor PEI backdoor debug messages in new terminal window: `tail -f ovmf_debug.log | grep PeiBackdoor`
+6. Monitor PEI backdoor debug messages in the new terminal window: `tail -f ovmf_debug.log | grep PeiBackdoor`
 
 Example of PEI backdoor debug output:
 
