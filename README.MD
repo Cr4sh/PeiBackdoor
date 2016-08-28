@@ -2,7 +2,7 @@
 
 This project implements early stage firmware backdoor for UEFI based firmware. It allows to execute arbitrary code written in C during Pre EFI Init (PEI) phase of Platform Initialization (PI). This backdoor might be useful for low level manipulations with the target platform configuration when the most of the platform configuration registers are not locked yet.
 
-<img height="378" src="https://raw.githubusercontent.com/Cr4sh/blog/master/uefi-smm-backdoor/uefi-boot-sequence.png" style="border: 0px;" width="679"></img>
+<img height="430" src="https://raw.githubusercontent.com/tianocore/tianocore.github.io/master/images/PI_Boot_Phases.JPG" style="border: 0px;" width="610"></img>
 
 Possible applied use cases:
 
