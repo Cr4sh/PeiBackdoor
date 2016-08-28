@@ -145,7 +145,7 @@ PeiBackdoor.c(68) : HOB: type = 0x2
 ```
 
 Written by:
+
 Dmytro Oleksiuk (aka Cr4sh)
 
-cr4sh0@gmail.com
-http://blog.cr4.sh
+cr4sh0@gmail.com :: http://blog.cr4.sh
