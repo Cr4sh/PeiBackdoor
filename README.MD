@@ -30,6 +30,72 @@ PEI backdoor project includes:
 
 ## Building from the source code <a id="_1"></a>
 
+`payload.c` file with the user supplied PEI stage payload code has the following look:
+
+```cpp
+// needed libraries
+#include <PiPei.h>
+#include <Library/PeimEntryPoint.h>
+#include <Library/DebugLib.h>
+#include <Library/HobLib.h>
+
+// needed PPIs
+#include <Ppi/CpuIo.h>
+#include <Ppi/PciCfg.h>
+#include <Ppi/MemoryDiscovered.h>
+
+#include "config.h"
+#include "payload.h"
+
+// PEI backdoor functions
+#include "src/common.h"
+#include "src/debug.h"
+
+EFI_STATUS
+MemoryDiscoveredCallback(
+    EFI_PEI_SERVICES **ppPeiServices,
+    EFI_PEI_NOTIFY_DESCRIPTOR *NotifyDescriptor,
+    VOID *NullPpi)
+{
+    // code that needs to be executed after the RAM initialization goes here
+    // ...
+
+    return EFI_SUCCESS;
+}
+
+static EFI_PEI_NOTIFY_DESCRIPTOR m_MemoryDiscoveredNotify[] =
+{
+    {
+        EFI_PEI_PPI_DESCRIPTOR_NOTIFY_CALLBACK | EFI_PEI_PPI_DESCRIPTOR_TERMINATE_LIST,
+        &gEfiPeiMemoryDiscoveredPpiGuid,
+        MemoryDiscoveredCallback
+    }
+};
+
+// main payload function
+EFI_STATUS Payload(
+    EFI_PEI_FILE_HANDLE FileHandle, 
+    CONST EFI_PEI_SERVICES **ppPeiServices)
+{
+    EFI_STATUS Status = EFI_SUCCESS; 
+
+    if (ppPeiServices)
+    {
+        // install notify handler that will be called after the main memory init
+        if ((Status = (*ppPeiServices)->NotifyPpi(ppPeiServices, m_MemoryDiscoveredNotify)) != EFI_SUCCESS)
+        {
+            DbgMsg(__FILE__, __LINE__, "NotifyPpi() ERROR 0x%x\r\n", Status);
+        }   
+    }    
+
+    // code that needs to be executed before the RAM initialization goes here
+    // ...
+
+    return EFI_SUCCESS;   
+}
+
+```
+
 To build PeiBackdoor project you need to have a Windows machine with Visual Studio 2008 and [EDK2 source code](https://github.com/tianocore/edk2).
 
 Step by step instruction:
