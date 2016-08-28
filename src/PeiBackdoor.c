@@ -21,7 +21,6 @@
 #include "ovmf.h"
 #include "PeiBackdoor.h"
 #include "asm/common_asm.h"
-#include "udis86/extern.h"
 
 #pragma warning(disable: 4054)
 #pragma warning(disable: 4055)
