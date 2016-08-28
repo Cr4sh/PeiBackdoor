@@ -74,7 +74,7 @@ To run `PeiBackdoor.efi` on your physical machine:
 
 2. Open dumped flash image in [UEFITool](https://github.com/LongSoft/UEFITool) and extract PE/TE image of existing PEI driver that you want to infect with PEI backdoor:
 
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Cr4sh/blog/master/pei-replace.png" width="650" height="378" style="border: 0px;"></img>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Cr4sh/blog/master/pei-replace.png" width="650" height="378" style="border: 0px;"></img>
 
 3. Infect extracted PE or TE image with `SmmBackdoor_IA32.efi` or `SmmBackdoor_X64.efi` depending to it's architecture: `python PeiBackdoor.py -d image.efi -o image_patched.bin -p PeiBackdoor_IA32.efi`
 
