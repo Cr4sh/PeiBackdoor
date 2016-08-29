@@ -100,7 +100,7 @@ EFI_STATUS Payload(
 
 `config.h` file allows to change some of the backdoor settings:
 
-```
+```cpp
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
@@ -142,7 +142,6 @@ EFI_STATUS Payload(
 #define SERIAL_PORT_NUM SERIAL_PORT_0
 
 #endif
-
 ```
 
 To build PeiBackdoor project you need to have a Windows machine with Visual Studio 2008 and [EDK2 source code](https://github.com/tianocore/edk2).
