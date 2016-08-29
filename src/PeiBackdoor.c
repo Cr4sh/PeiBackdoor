@@ -77,6 +77,14 @@ VOID *ImageBaseByAddress(VOID *Addr)
     return NULL;
 }
 //--------------------------------------------------------------------------------------
+VOID BackdoorInfoInitialize(VOID)
+{    
+    BackdoorInfo()->Signature = BACKDOOR_INFO_SIGN;
+    BackdoorInfo()->PayloadBase = m_InfectorConfig.BackdoorImageBase;
+    BackdoorInfo()->Status = 0;
+    BackdoorInfo()->Messages[0] = '\0';
+}
+//--------------------------------------------------------------------------------------
 EFI_STATUS BackdoorImageCallRealEntry(
     EFI_PEI_FILE_HANDLE FileHandle, 
     CONST EFI_PEI_SERVICES **ppPeiServices)
@@ -150,9 +158,7 @@ BackdoorEntry(
 #if defined(BACKDOOR_DEBUG_MEM)
 
     // initialize BACKDOOR_INFO structure
-    BackdoorInfo()->PayloadBase = m_InfectorConfig.BackdoorImageBase;
-    BackdoorInfo()->Status = 0;
-    BackdoorInfo()->Messages[0] = '\0';
+    BackdoorInfoInitialize();
 
 #endif
 

@@ -6,10 +6,24 @@
 
 #pragma pack(1)
 
+#define BACKDOOR_INFO_SIGN 'INFO'
+
+/*
+    If BACKDOOR_DEBUG_MEM is enabled -- backdoor writes
+    this structure at the beginning og the memory region
+    specified in BACKDOOR_INFO_ADDR and BACKDOOR_INFO_SIZE
+    (see config.h)
+*/
 typedef struct _BACKDOOR_INFO
 {
+    // BACKDOOR_INFO_SIGN signature
+    UINT64 Signature;
+
+    // general backdoor information
     UINT64 PayloadBase;
     UINT64 Status;
+
+    // debug output of DbgMsg()
     char Messages[];
 
 } BACKDOOR_INFO,
@@ -32,11 +46,6 @@ typedef struct _INFECTOR_CONFIG
 // physical address where flash image will be mapped by system
 #define FLASH_ADDR 0xff800000
 #define FLASH_SIZE 0x800000
-
-// location of BACKDOOR_INFO structure
-#define BACKDOOR_INFO_SIZE 0x1000
-#define BACKDOOR_INFO_ADDR 0x1000
-
 
 #define BackdoorInfo() ((PBACKDOOR_INFO)BACKDOOR_INFO_ADDR)
 
