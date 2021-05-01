@@ -2,7 +2,7 @@
 
 This project implements early stage firmware backdoor for UEFI based firmware. It allows to execute arbitrary code written in C during Pre EFI Init (PEI) phase of Platform Initialization (PI). This backdoor might be useful for low level manipulations with the target platform configuration when the most of the platform configuration registers are not locked yet.
 
-<img height="430" src="https://raw.githubusercontent.com/tianocore/tianocore.github.io/master/images/PI_Boot_Phases.JPG" style="border: 0px;" width="610"></img>
+<img src="https://raw.githubusercontent.com/tianocore/tianocore.github.io/master/images/PI_Boot_Phases.JPG" width="610">
 
 Possible applied use cases:
 
@@ -188,7 +188,7 @@ To run `PeiBackdoor.efi` on your physical machine you need to obtain image of ex
 
 2. Open dumped flash image in [UEFITool](https://github.com/LongSoft/UEFITool) and extract PE/TE image of existing PEI driver that you want to infect with PEI backdoor:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Cr4sh/blog/master/pei-replace.png" width="650" height="378" style="border: 0px;"></img>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Cr4sh/blog/master/pei-replace.png" width="650">
 
 ... and itfect it using `PeiBackdoor.py`:
 
